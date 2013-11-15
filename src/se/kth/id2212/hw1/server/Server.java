@@ -20,7 +20,6 @@ public class Server {
     private final int port;
     private final int poolSize;
     private ServerSocket serverSocket = null;
-    private GameModel game;
 
     public Server(int poolSize, int port) {
         this.poolSize = poolSize;
@@ -39,9 +38,6 @@ public class Server {
             while (true) {
                 Socket socket = serverSocket.accept();
                 executor.execute(new ConnectionHandler(socket));
-                //TODO can the game start
-                
-                
             }
 
         } catch (IOException e) {

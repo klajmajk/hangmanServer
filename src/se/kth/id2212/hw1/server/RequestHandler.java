@@ -4,55 +4,56 @@
  */
 package se.kth.id2212.hw1.server;
 
-import se.kth.id2212.common.Player;
 import se.kth.id2212.common.Request;
-import static se.kth.id2212.common.RequestStatus.ASK_STATUS;
-import static se.kth.id2212.common.RequestStatus.CONNECT;
-import static se.kth.id2212.common.RequestStatus.MAKE_MOVE;
 import se.kth.id2212.common.Response;
 import se.kth.id2212.common.ResponseStatus;
-
-
 
 /**
  *
  * @author Adam
  */
 public class RequestHandler {
+
     private GameModel game;
 
     public RequestHandler(GameModel game) {
         this.game = game;
-    }    
+    }
 
     public Response handleRequest(Request req) {
         Response resp = null;
         switch (req.getStatus()) {
-            case CONNECT:
-                resp = handleConnect(req);
+            case START_NEW_GAME:
+                resp = handleStartNewGame(req);
                 break;
 
-            case ASK_STATUS:
-                resp =  handleAskStatus(req);
+            case GUESS_LETTER:
+                resp = handleGuessLetter(req);
                 break;
 
-            case MAKE_MOVE:
-                // TODO
+            case GUESS_WORD:
+                resp = handleGuessWord(req);
                 break;
         }
         return resp;
     }
-    
-    private Response handleConnect(Request req){
-        /*Player newPlayer = req.getPlayer();
-        game.addPlayer(newPlayer);
-        //this.playerName = newPlayer.getName();
-        return new Response(game.getPlayers(), ResponseStatus.CONNECT_OK,game.getCurrentRound() );*/
-        throw new UnsupportedOperationException("TODO -- not yet implemented");
+
+    private Response handleStartNewGame(Request req) {
+        game.startNewGame();
+        return new Response(ResponseStatus.PLAYED, game.getCurrentWordStatus(), game.getTriesLeft(), game.getScore());
     }
-    
-    private Response handleAskStatus(Request req){
-        //return new Response(game.getPlayers(), game.getCurrentStatus(),game.getCurrentRound());
-        throw new UnsupportedOperationException("TODO -- not yet implemented");
+
+    private Response handleGuessLetter(Request req) {
+        char letter = req.getLetterGuessed();
+        game.guessLetter(letter);
+        return new Response(game.getStatus(), game.getCurrentWordStatus(), game.getTriesLeft(), game.getScore());
     }
+
+    private Response handleGuessWord(Request req) {
+
+        String word = req.getWordGuessed();
+        game.guessWord(word);
+        return new Response(game.getStatus(), game.getCurrentWordStatus(), game.getTriesLeft(), game.getScore());
+    }
+
 }

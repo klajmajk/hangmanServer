@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import se.kth.id2212.common.Player;
 import se.kth.id2212.common.Request;
 import se.kth.id2212.common.Response;
 
@@ -26,14 +24,13 @@ public class ConnectionHandler implements Runnable {
 
     private Socket clientSocket;
     private GameModel game;
-    private List<Player> players;
     private Request req;
     private Response resp;
-    private String playerName;
     private RequestHandler reqHandler;
 
     public ConnectionHandler(Socket clientSocket) {
-        this.game = new GameModel("TODO add word generator");
+        // Here we pass the word to guess
+        this.game = new GameModel();
         this.clientSocket = clientSocket;
         this.reqHandler = new RequestHandler(game);
     }
