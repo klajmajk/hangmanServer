@@ -25,26 +25,15 @@ public class Server {
     private final int port;
     private final int poolSize;
     private ServerSocket serverSocket = null;
-    private int round;
-    private List<Player> players;
+    private GameModel game;
 
     public Server(int poolSize, int port) {
         this.poolSize = poolSize;
         this.port = port;
-        
-        this.round = 0;
-        this.players = new ArrayList<Player>();
-
+        this.game = new GameModel();
         this.launch();
     }
 
-    public synchronized void addPlayer(Player p) {
-        this.players.add(p);
-    }
-    
-    public List<Player> getPlayers() {
-        return this.players;
-    }
 
     private void launch() {
         try {
@@ -55,11 +44,10 @@ public class Server {
             ExecutorService executor = Executors.newFixedThreadPool(this.poolSize);
             while (true) {
                 Socket socket = serverSocket.accept();
-                executor.execute(new ServerHandler(this, socket));
+                executor.execute(new ConnectionHandler(game, socket));
+                //TODO can the game start
                 
-                if(players.size() > 1) {
-                    this.round = (round == 0) ? 1 : round;
-                }
+                
             }
 
         } catch (IOException e) {
@@ -68,44 +56,5 @@ public class Server {
         }
     }
     
-    public synchronized void delPlayerByName(String name) {
-        for (Player player : players) {
-            if(player.getName().equals(name)) {
-                players.remove(player);
-            }
-        }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        int poolSize = 2;
-        int port = 5555;
-        try {
-            if (args.length > 1) {
-                poolSize = Integer.parseInt(args[1]);
-            }
-            if (args.length > 0) {
-                port = Integer.parseInt(args[0]);
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("USAGE: java RPSServer [poolSize] [port]");
-            System.exit(1);
-        }
-        Server serv = new Server(poolSize, port);
-    }
-
-    public int getCurrentRound() {
-        return this.round;
-    }
-
-    public ResponseStatus getCurrentStatus() {
-        for (Player player : players) {
-            if(player.getLastMove() == Move.NONE)
-                return ResponseStatus.WAIT;
-        }
-        return ResponseStatus.PLAY;
-    }
 
 }
