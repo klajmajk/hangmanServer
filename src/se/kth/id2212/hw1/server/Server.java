@@ -25,7 +25,6 @@ public class Server {
     public Server(int poolSize, int port) {
         this.poolSize = poolSize;
         this.port = port;
-        this.game = new GameModel();
         this.launch();
     }
 
@@ -39,7 +38,7 @@ public class Server {
             ExecutorService executor = Executors.newFixedThreadPool(this.poolSize);
             while (true) {
                 Socket socket = serverSocket.accept();
-                executor.execute(new ConnectionHandler(game, socket));
+                executor.execute(new ConnectionHandler(socket));
                 //TODO can the game start
                 
                 

@@ -18,48 +18,21 @@ import se.kth.id2212.common.ResponseStatus;
  */
 public class GameModel {
     
-    private int round;
-    private List<Player> players;
+    private int triesLeft;
+    private final String word;
+    private String currentWordStatus;
 
-    public GameModel() {     
-        this.round = 0;
-        this.players = new ArrayList<>();
+    public GameModel(String word) {
+        this.word = word;
+        this.triesLeft = getMaxTries();
+        
     }
     
-    
-    public void checkGameStatus(){
-        if(players.size() > 1) {
-            this.round = (round == 0) ? 1 : round;
-            
-        }
-    } 
-    
-    public synchronized void delPlayerByName(String name) {
-        for (Player player : players) {
-            if(player.getName().equals(name)) {
-                players.remove(player);
-            }
-        }
+    private int getMaxTries(){
+        return 10;
     }
+    
 
-    public int getCurrentRound() {
-        return this.round;
-    }
-
-    public ResponseStatus getCurrentStatus() {
-        for (Player player : players) {
-            if(player.getLastMove() == Move.NONE)
-                return ResponseStatus.WAIT;
-        }
-        return ResponseStatus.PLAY;
-    }
     
     
-    public synchronized void addPlayer(Player p) {
-        this.players.add(p);
-    }
-    
-    public List<Player> getPlayers() {
-        return this.players;
-    }
 }

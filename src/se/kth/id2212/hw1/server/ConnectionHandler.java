@@ -32,8 +32,8 @@ public class ConnectionHandler implements Runnable {
     private String playerName;
     private RequestHandler reqHandler;
 
-    public ConnectionHandler(GameModel game, Socket clientSocket) {
-        this.game = game;
+    public ConnectionHandler(Socket clientSocket) {
+        this.game = new GameModel("TODO add word generator");
         this.clientSocket = clientSocket;
         this.reqHandler = new RequestHandler(game);
     }
@@ -55,7 +55,6 @@ public class ConnectionHandler implements Runnable {
 
         } catch (IOException e) {
             System.err.println("Client disconnected");
-            game.delPlayerByName(playerName);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(ConnectionHandler.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -44,13 +44,15 @@ public class RequestHandler {
     }
     
     private Response handleConnect(Request req){
-        Player newPlayer = req.getPlayer();
+        /*Player newPlayer = req.getPlayer();
         game.addPlayer(newPlayer);
         //this.playerName = newPlayer.getName();
-        return new Response(game.getPlayers(), ResponseStatus.CONNECT_OK,game.getCurrentRound() );
+        return new Response(game.getPlayers(), ResponseStatus.CONNECT_OK,game.getCurrentRound() );*/
+        throw new UnsupportedOperationException("TODO -- not yet implemented");
     }
     
     private Response handleAskStatus(Request req){
-        return new Response(game.getPlayers(), game.getCurrentStatus(),game.getCurrentRound());
+        //return new Response(game.getPlayers(), game.getCurrentStatus(),game.getCurrentRound());
+        throw new UnsupportedOperationException("TODO -- not yet implemented");
     }
 }
