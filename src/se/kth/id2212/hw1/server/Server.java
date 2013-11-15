@@ -25,17 +25,17 @@ public class Server {
     private final int port;
     private final int poolSize;
     private ServerSocket serverSocket = null;
-    private int round = 0;
+    private int round;
     private List<Player> players;
 
     public Server(int poolSize, int port) {
         this.poolSize = poolSize;
         this.port = port;
-
+        
+        this.round = 0;
         this.players = new ArrayList<Player>();
 
         this.launch();
-
     }
 
     public synchronized void addPlayer(Player p) {
@@ -54,11 +54,12 @@ public class Server {
 
             ExecutorService executor = Executors.newFixedThreadPool(this.poolSize);
             while (true) {
+                Socket socket = serverSocket.accept();
+                executor.execute(new ServerHandler(this, socket));
+                
                 if(players.size() > 1) {
                     this.round = (round == 0) ? 1 : round;
                 }
-                Socket socket = serverSocket.accept();
-                executor.execute(new ServerHandler(this, socket));
             }
 
         } catch (IOException e) {
