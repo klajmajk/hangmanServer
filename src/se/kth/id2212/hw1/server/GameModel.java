@@ -40,10 +40,14 @@ public class GameModel {
     }
     
     public ResponseStatus getStatus() {
-        if(word.equals(currentWordStatus))
+        if(word.equals(currentWordStatus)) {
+            score++;
             return ResponseStatus.WON;
-        else if (triesLeft == 0)
+        }
+        else if (triesLeft == 0) {
+            score--;
             return ResponseStatus.LOST;
+        }
         else
             return ResponseStatus.PLAYED;  
     }

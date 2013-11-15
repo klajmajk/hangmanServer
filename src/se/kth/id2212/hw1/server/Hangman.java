@@ -21,16 +21,15 @@ public class Hangman {
     }
 
     public static String guess(String word, char letter, String currentWord) {
-        String ret = "";
+        StringBuilder stringBuilder = new StringBuilder(currentWord);
+        
         for (int i = 0; i < word.length(); i++) {
             if (word.charAt(i) == letter) {
-                ret += Character.toString(letter);
-            } else {
-                ret += "-";
+                stringBuilder.setCharAt(i, letter);
             }
         }
 
-        return ret;
+        return stringBuilder.toString();
     }
     
     
