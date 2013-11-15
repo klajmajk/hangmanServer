@@ -8,13 +8,8 @@ package se.kth.id2212.hw1.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import se.kth.id2212.common.Move;
-import se.kth.id2212.common.Player;
-import se.kth.id2212.common.ResponseStatus;
 
 /**
  *
