@@ -24,8 +24,9 @@ public class Hangman {
         StringBuilder stringBuilder = new StringBuilder(currentWord);
         
         for (int i = 0; i < word.length(); i++) {
-            if (word.charAt(i) == letter) {
-                stringBuilder.setCharAt(i, letter);
+            //added this to be able to guess case 
+            if (Character.toLowerCase(word.charAt(i)) == Character.toLowerCase(letter)) {
+                stringBuilder.setCharAt(i, word.charAt(i));
             }
         }
 
