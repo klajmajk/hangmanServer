@@ -19,11 +19,13 @@ public class GameModel {
     private int triesLeft;
     private String word;
     private String currentWordStatus;
+    private RandomWord randomWord;
     
     private int score;
 
     public GameModel() {
         this.score = 0;
+        this.randomWord = new RandomWord();
         
     }
 
@@ -54,7 +56,7 @@ public class GameModel {
     
     public void startNewGame() {
         this.triesLeft = MAX_TRIES;
-        this.word = "elephant";
+        this.word = randomWord.getRandomWord();
         this.currentWordStatus = Hangman.getEmptyWord(this.word);
     }
     
