@@ -23,7 +23,7 @@ public class RandomWord {
 
     public RandomWord() {
         this.wordsDict = readDict();
-        System.out.println(wordsDict);
+        // System.out.println(wordsDict);
         
     }
     

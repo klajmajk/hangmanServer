@@ -54,6 +54,8 @@ public class GameModel {
         this.triesLeft = MAX_TRIES;
         this.word = randomWord.getRandomWord();
         this.currentWordStatus = Hangman.getEmptyWord(this.word);
+        
+        System.out.println(word);
     }
 
     public void guessLetter(char letter) {
